@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maha Sarakham City</title>
+
+  <!-- Bootstrap CSS from CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+  <!-- Your content goes here -->
+  <div class="container" >
+    <div class="px-4 pt-5 my-5 text-center border-bottom">
+      <h1 class="display-4 fw-bold text-body-emphasis">
+          Patient Prediction Program <br>
+          Maha Sarakham City
+      </h1>
+      <div class="col-lg-6 mx-auto">
+        <p class="lead mb-12">This program predicts the number of patients for a specific month.</p>
+        <hr>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5" style="margin-bottom: 1rem !important">
+
+          <p style="width: 250px;"><strong>PM2.5 (μg/m3)</strong> <br>
+            <input style="width: 150px;" type="number" id="input_pm25" value="21.59" placeholder="Enter Average PM 2.5"><br>
+            <small>Average PM2.5</small>
+          </p>
+
+          <p style="width: 250px;"><strong>PM10 (μg/m3)</strong> <br>
+            <input style="width: 150px;" type="number" id="input_pm10" value="23.75" placeholder="Enter Average PM 10"><br>
+            <small>Average PM10</small>
+          </p>                   
+          <!-- <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button> -->
+        </div>
+        
+        <h2>Result</h2>
+        <h3>Predicted Number of Patients: <span id="result"></span></h3>
+
+        <p>
+          <button type="button" onclick="calculateLinearAlgorithm()" class="btn btn-primary px-4 me-sm-3">Calculate</button>
+        </p>
+      </div>
+      <small style="color: #aaaaaa;">
+The equation for predicting the number of patients based on the Relationship of PM2.5 and PM10 is as follows: <br>
+patient = (433.355610772589)[b] + (-1435.255884233031)[pm25] + (1353.1494625718458)[pm10] <br>
+R<sup>2</sup> =  0.7327596401235068
+
+      </small>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and Popper.js from CDN (for Bootstrap components) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+</body>
+
+<script>
+  function calculateLinearAlgorithm() {
+      const pm25 = parseFloat(document.getElementById("input_pm25").value);
+      const pm10 = parseFloat(document.getElementById("input_pm10").value);
+
+      const b0 = 433.355610772589;
+      const b1 = -1435.255884233031;
+      const b2 = 1353.1494625718458;
+
+      if (isNaN(pm25) || isNaN(pm10)) {
+          document.getElementById("result").textContent = 'Inputs must be valid numbers.';
+      } else {
+          var patients = b0 + (pm25 * b1 ) + (pm10 * b2);
+
+          if (patients < 0) {
+            patients = 0;
+          }
+          console.warn("b0"+ b0);
+          console.warn("b1"+ b1 +" "+ pm25 * b1);
+          console.warn("b2"+ b2 +" "+ pm10 * b2);
+          const formattedResult = patients.toFixed(2); 
+          document.getElementById("result").textContent = `${formattedResult}`;
+      }
+  }
+</script>
+
+</html>
+
+
